@@ -1,0 +1,6 @@
+---
+# defaults file for deploy_apache_web
+
+# source_folder: ./mywebsite2
+dest_folder: /var/www/html
+

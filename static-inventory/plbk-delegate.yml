@@ -1,0 +1,51 @@
+---
+- name: Delegate playbook
+  hosts: linux
+  become: yes
+
+
+  vars:
+    mytext: "Preved, medved!"
+
+  tasks:
+  - name: Ping
+    ping:
+
+  - name: Unregister Server from Load Balancer
+    shell: echo This server {{ inventory_hostname }} was unregistered from our Load Balancer, node name is {{ ansible_nodename }} >> /Users/orkhan.mamedov/ansible-lessons/ansible-log.txt
+    delegate_to: 127.0.0.1
+
+  - name: Update db
+    shell: echo Updating db...
+    run_once: true
+
+  - name: Create file1
+    copy:
+      dest: /home/file1.txt
+      content: |
+        This is a file1
+        On english: Hello, pooh!
+        On russian: {{ mytext }}
+    delegate_to: aws-amazon
+
+  - name: Create file2
+    copy:
+      dest: /home/file2.txt
+      content: |
+        This is a file2
+        On english: Hello, pooh!
+        On russian: {{ mytext }}
+
+  - name: Reboot servers
+    shell: sleep 3 && reboot now
+    async: 1
+    poll: 0
+
+  - name: Wait for initialization
+    wait_for: 
+      host: "{{ inventory_hostname }}"
+      state: started
+      delay: 5
+      timeout: 40
+    delegate_to: 127.0.0.1
+

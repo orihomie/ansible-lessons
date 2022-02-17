@@ -1,0 +1,27 @@
+
+- name: Loops Playbook
+  hosts: amazon
+  become: yes
+
+  tasks:
+
+  - name: Greetings
+    debug: msg="Hello {{ item }}"
+    loop: 
+      - "Vasya"
+      - "Petya"
+      - "Masha"
+      - "Olya"
+    #with_items:
+
+  - name: Loop Until sample
+    shell: echo -n Z >> myfile.txt && cat myfile.txt
+    register: outputvar
+    delay: 2 #seconds
+    retries: 10 #by default is 3
+    until: outputvar.stdout.find("ZZZZ") == false
+
+  - name: Print final output
+    debug: 
+      var: outputvar.stdout
+

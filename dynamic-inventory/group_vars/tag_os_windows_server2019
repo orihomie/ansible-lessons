@@ -1,0 +1,5 @@
+---
+ansible_user:			Administrator
+ansible_shell_type:   		cmd
+ansible_ssh_private_key_file:	/Users/orkhan.mamedov/.ssh/win_rsa
+

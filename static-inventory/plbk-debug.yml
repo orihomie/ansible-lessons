@@ -1,0 +1,36 @@
+
+- name: Custom playbook
+  hosts: linux
+  become: yes
+
+  vars:
+    message1: Privet
+    message2: World!
+    secret  : MySuperSecret
+
+  tasks:
+
+  - name: Print Secret variables
+    debug: 
+      var: secret
+
+  - debug:
+      msg: "Secret word: {{ secret }}"
+
+  - debug:
+      msg: "Contact owner: {{ owner }}"
+
+  - set_fact: full_message="{{ message1 }} {{ message2}} from {{ owner }}"
+
+  - debug:
+      var: full_message
+
+  - debug:
+      var: ansible_distribution
+
+  - shell: uptime
+    register: results
+
+  - debug:
+      var: results
+

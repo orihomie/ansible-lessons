@@ -1,0 +1,23 @@
+---
+- name: Error Handling Playbook
+  hosts: rhel
+  become: yes
+
+  tasks:
+  - name: Install smth
+    yum: name=treeeee state=latest
+    ignore_errors: yes
+
+  - name: Echo smth
+    shell: echo Hello, world!
+    register: results
+    failed_when: results.rc == 0
+    ignore_errors: yes
+#    failed_when: "'world' in results.stdout"
+  
+  - debug:
+      var: results
+
+  - name: Echo one more thing
+    shell: echo Bye, have a great time!
+

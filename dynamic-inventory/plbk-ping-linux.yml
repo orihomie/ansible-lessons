@@ -1,0 +1,9 @@
+- name: Test Connection to my linux servers
+  hosts: tag_osf_linux
+  become: yes
+
+  tasks: 
+
+  - name: Ping my servers
+    ping: 
+

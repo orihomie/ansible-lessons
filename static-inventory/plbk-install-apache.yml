@@ -1,0 +1,11 @@
+- name: Install Apache Web Server
+  hosts: linux
+  become: yes
+
+  tasks:
+  - name: Install Apache Web Server
+    apt: name=apache2 state=latest
+
+  - name: Launch Apache and Enable it on the boot
+    service: name=apache2 state=started enabled=yes
+

@@ -1,0 +1,21 @@
+---
+- name: Error Handling Playbook
+  hosts: rhel
+  any_errors_fatal: true
+  become: yes
+
+  tasks:
+  - name: Install smth
+    yum: name=tree state=latest
+    ignore_errors: yes
+
+  - name: Echo smth
+    shell: cat /home/ec2-user/myfile.txt
+    register: results 
+      
+#  - debug:
+#      var: results
+
+  - name: Echo one more thing
+    shell: echo Bye, have a great time!
+
